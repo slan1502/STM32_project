@@ -1,0 +1,3 @@
+echo 正在删除临时文件...
+del %cd%\OBJ\*.*
+pause
