@@ -9,19 +9,19 @@ void TIME2_Init()
 	
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);	//使能TIM2时钟
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);	//使能GPIOA时钟
-	
+	//GPIO初始化
 	GPIO_StructInit(&my_GPIO_InitStruct);											
 	my_GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1;
 	my_GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
 	my_GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN_FLOATING;
 	GPIO_Init(GPIOA, &my_GPIO_InitStruct);
-	
+	//通过NVIC初始化中断
 	my_NVIC_InitStruct.NVIC_IRQChannel = TIM2_IRQn;
 	my_NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 2;
 	my_NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
 	my_NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&my_NVIC_InitStruct);
-	
+	//初始化TIM2
 	my_TIM_InitStruct.TIM_Prescaler = 0;
 	my_TIM_InitStruct.TIM_CounterMode = TIM_CounterMode_Up;
 	my_TIM_InitStruct.TIM_Period = 5;
@@ -39,15 +39,16 @@ void TIME2_Init()
   TIM_Cmd(TIM2, ENABLE);
 }
 	
+	__IO u16 temp;
 int main()
 {
-	__IO u32 temp;
 	
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+// 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	TIME2_Init();
 	//SysTick_Config(SystemCoreClock/1000);
 	while(1)
 	{
 		temp = TIM_GetCounter(TIM2);
+		temp = 0;
 	}	
 }

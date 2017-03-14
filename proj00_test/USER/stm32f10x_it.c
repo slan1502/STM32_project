@@ -137,13 +137,22 @@ void SysTick_Handler(void)
 {
 	static __IO u16 timer_count=0;
 	timer_count++;
+// 	if(timer_count==500)
+// 	{
+// 		GPIO_ResetBits(GPIOE, GPIO_Pin_5);
+// 		GPIO_SetBits(GPIOB, GPIO_Pin_5);
+// 	}else if(timer_count==1000){
+// 		GPIO_ResetBits(GPIOB, GPIO_Pin_5);
+// 		GPIO_SetBits(GPIOE, GPIO_Pin_5);
+// 		timer_count = 0;
+// 	}
 	if(timer_count==500)
 	{
-		GPIO_ResetBits(GPIOE, GPIO_Pin_5);
-		GPIO_SetBits(GPIOB, GPIO_Pin_5);
+		GPIO_ResetBits(GPIOC, GPIO_Pin_0);
+		GPIO_SetBits(GPIOD, GPIO_Pin_3);
 	}else if(timer_count==1000){
-		GPIO_ResetBits(GPIOB, GPIO_Pin_5);
-		GPIO_SetBits(GPIOE, GPIO_Pin_5);
+		GPIO_ResetBits(GPIOD, GPIO_Pin_3);
+		GPIO_SetBits(GPIOC, GPIO_Pin_0);
 		timer_count = 0;
 	}
 }
