@@ -1,7 +1,7 @@
 #include "stm32f10x.h"
-#include "uart.h"
-#include "led.h"
-#include "delay.h"
+#include "my_APP_lib\uart.h"
+#include "my_APP_lib\led.h"
+#include "my_APP_lib\delay.h"
 
 
 int main()
@@ -9,6 +9,8 @@ int main()
 	__IO u32 temp;
 	led_init();
 	delay_init();
+	printf_init(19200);
+	printf("hello\r\n");
 	while(1)
 	{
 		LED1_ON;

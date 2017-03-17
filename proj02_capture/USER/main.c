@@ -1,4 +1,7 @@
 #include "stm32f10x.h"
+#include "my_APP_lib\uart.h"
+#include "my_APP_lib\led.h"
+#include "my_APP_lib\delay.h"
 
 void TIME2_Init()
 {
@@ -16,15 +19,15 @@ void TIME2_Init()
 	my_GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN_FLOATING;
 	GPIO_Init(GPIOA, &my_GPIO_InitStruct);
 	//通过NVIC初始化中断
-	my_NVIC_InitStruct.NVIC_IRQChannel = TIM2_IRQn;
-	my_NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 2;
-	my_NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
-	my_NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&my_NVIC_InitStruct);
+// 	my_NVIC_InitStruct.NVIC_IRQChannel = TIM2_IRQn;
+// 	my_NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 2;
+// 	my_NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
+// 	my_NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+// 	NVIC_Init(&my_NVIC_InitStruct);
 	//初始化TIM2
 	my_TIM_InitStruct.TIM_Prescaler = 0;
 	my_TIM_InitStruct.TIM_CounterMode = TIM_CounterMode_Up;
-	my_TIM_InitStruct.TIM_Period = 5;
+	my_TIM_InitStruct.TIM_Period = 0xffff;
 	my_TIM_InitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseInit(TIM2, &my_TIM_InitStruct);
 	
@@ -35,20 +38,32 @@ void TIME2_Init()
 	
 	TIM_ClearFlag(TIM2, TIM_FLAG_Update);
   TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-  TIM_SetCounter(TIM2, 0); 
+  TIM_SetCounter(TIM2, 0x7fff); 
   TIM_Cmd(TIM2, ENABLE);
 }
 	
-	__IO u16 temp;
 int main()
 {
-	
-// 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+	__IO int temp;
+	led_init();
+	delay_init();
+	printf_init(19200);
+	printf("hello\r\n");
 	TIME2_Init();
-	//SysTick_Config(SystemCoreClock/1000);
 	while(1)
 	{
-		temp = TIM_GetCounter(TIM2);
-		temp = 0;
+		LED1_ON;
+		delay_ms(200);
+		LED1_OFF;
+		delay_ms(200);
+		if(GPIO_ReadOutputDataBit(LED2_GPIO, LED2_PIN))
+		{
+			GPIO_WriteBit(LED2_GPIO, LED2_PIN, Bit_RESET);
+		}else{
+			GPIO_WriteBit(LED2_GPIO, LED2_PIN, Bit_SET);
+		}
+			
+		temp = (int)(TIM_GetCounter(TIM2)-0x7fff)/2;
+		printf("temp=%d\r\n", temp);
 	}	
 }
