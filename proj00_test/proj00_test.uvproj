@@ -166,7 +166,7 @@
             <DriverSelection>4099</DriverSelection>
           </Flash1>
           <Flash2>Segger\JL2CM3.dll</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -211,7 +211,7 @@
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD</Define>
               <Undefine></Undefine>
-              <IncludePath>.\CMSIS;.\LIB\inc;.\USER</IncludePath>
+              <IncludePath>.\CMSIS;.\LIB\inc;.\USER;.\USER\my_APP_lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -552,14 +552,24 @@
               <FilePath>.\USER\stm32f10x_it.h</FilePath>
             </File>
             <File>
-              <FileName>usart.c</FileName>
+              <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\USER\usart.c</FilePath>
+              <FilePath>.\USER\my_APP_lib\delay.c</FilePath>
             </File>
             <File>
-              <FileName>usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\USER\usart.h</FilePath>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\USER\my_APP_lib\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>timerx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\USER\my_APP_lib\timerx.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\USER\my_APP_lib\uart.c</FilePath>
             </File>
           </Files>
         </Group>

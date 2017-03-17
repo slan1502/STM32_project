@@ -131,11 +131,16 @@ void PendSV_Handler(void)
 
 void TIM2_IRQHandler(void)
 {
-	if(TIM_GetITStatus(TIM2, TIM_IT_Update)!=RESET)
-	{
-		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-	}
 }
+
+void TIM3_IRQHandler(void) 
+{ 	    	  	     
+	if(TIM3->SR&0X0001)//溢出 更新中断  
+	{ 
+										
+	}	    
+	TIM3->SR&=~(1<<0);//清除标志位 	     
+} 
 /******************************************************************************/
 /*                 STM32F10x Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
